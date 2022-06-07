@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:olx_clone/Rotas.dart';
 import 'package:olx_clone/models/Usuario.dart';
 
+import '../controller.dart';
+
 class Anuncios extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => AnunciosState();
@@ -54,30 +56,31 @@ class AnunciosState extends State<Anuncios>{
                   ?Text("Sair")
                   :Text("Logar"),
              onTap: (){
-               Navigator.pop(context);
-
                Usuario.verificarUsuarioLogado()
-                   ?Usuario.deslogarUsuario()
+                   ?deslogarUsuario()
                    :  Navigator.pushNamed((context),Rotas.ROTAS_LOGIN);
-
+             },
+           ),
+           ListTile(
+             title:  Usuario.verificarUsuarioLogado()
+                 ?Text("Meu Perfil")
+                 : Text("Cadastrar"),
+             onTap: (){
+               Navigator.pop(context);
+               Navigator.pushNamed((context), Rotas.ROTAS_CADASTRAR);
              },
            ),
            ListTile(
              title: Text("Meus Anúncios"),
              onTap: (){
                Navigator.pop(context);
-               Navigator.pushNamed((context), Rotas.ROTAS_LOGIN);
+
+               Usuario.verificarUsuarioLogado()
+                 ?Navigator.pushNamed(context, Rotas.ROTAS_USER_ANUNCIOS)
+                 :Navigator.pushNamed((context), Rotas.ROTAS_LOGIN);
              },
            ),
-           ListTile(
-             title:  Usuario.verificarUsuarioLogado()
-                        ?Container()
-                        : Text("Cadastrar"),
-             onTap: (){
-               Navigator.pop(context);
-               Navigator.pushNamed((context), Rotas.ROTAS_CADASTRAR);
-             },
-           ),
+
            ListTile(
              title: Text("Configuraçoes",),
              onTap: (){
@@ -85,16 +88,14 @@ class AnunciosState extends State<Anuncios>{
                Navigator.pushNamed((context), Rotas.ROTAS_CADASTRAR);
              },
            ),
-           ListTile(
-             title: Text("Sair"),
-             onTap: (){
-               Navigator.pop(context);
-               Usuario.deslogarUsuario();
-             },
-           ),
+
          ],
        );
-   
+  }
+
+  deslogarUsuario(){
+    FirebaseBd.auth.signOut();
+    Navigator.pushNamedAndRemoveUntil(context, Rotas.ROTAS_ANUNCIOS, (route) => false);
   }
 
 

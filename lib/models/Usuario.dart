@@ -27,9 +27,7 @@ class Usuario {
     }
   }
 
-  static deslogarUsuario(){
-     FirebaseBd.auth.signOut();
-  }
+
 
   String get email => _email;
 
