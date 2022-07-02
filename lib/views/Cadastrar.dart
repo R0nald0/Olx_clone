@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:olx_clone/componets/BotaoPersonalizado.dart';
 import 'package:olx_clone/controller.dart';
 import 'package:olx_clone/models/Usuario.dart';
 
 import '../Rotas.dart';
-import '../componets/BotaoInputPersonalisado.dart';
+import '../componets/InputPersonalisado.dart';
 
 class Cadastrar extends StatefulWidget{
   @override
@@ -39,7 +40,7 @@ class CadastrarState extends State<Cadastrar> {
                       width: 150,
                     ),
                   ),
-                  BotaoInputPersonalizado(
+                  InputPersonalizado(
                     _editingControllerNome,
                     corPadrao,
                     "Seu Nome",
@@ -48,16 +49,16 @@ class CadastrarState extends State<Cadastrar> {
                     textInputType: TextInputType.name,
                   ),
                   SizedBox(height: 20,),
-                  BotaoInputPersonalizado(
+                  InputPersonalizado(
                     _editingControllerEmail,
                     corPadrao,
                     "Email",
                     "Seu@Email.com",
-                    Icon(Icons.person),
+                    Icon(Icons.email),
                     textInputType: TextInputType.name,
                   ),
                   SizedBox(height: 20),
-                  BotaoInputPersonalizado(
+                 InputPersonalizado(
                     _editingControllerSenha,
                     corPadrao,
                     "Senha",
@@ -66,20 +67,10 @@ class CadastrarState extends State<Cadastrar> {
                     isPassword: true,
                   ),
                   SizedBox(height: 30,),
-                  ElevatedButton(
-                    onPressed: () {
-                      validarCampos();
-                      snac(msgErro);
-                    },
-                    style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                        primary: corPadrao,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18))),
-                    child: Text(
-                      "Cadastrar",
-                      style: TextStyle(fontSize: 20),
-                    ),
+                  BotaoPersonalizado(
+                    corPadrao:corPadrao ,
+                      onPressed: (){validarCampos();snac(msgErro);},
+                       textoBtn:Text(" Login",style: TextStyle(fontSize: 20))
                   ),
                 ],
               )
@@ -100,6 +91,10 @@ class CadastrarState extends State<Cadastrar> {
         password: usuario.senha
     ).then((value){
       Navigator.pushNamedAndRemoveUntil((context), Rotas.ROTAS_ANUNCIOS, (route) => false);
+    }).catchError((){
+        setState(() {
+           msgErro ="Erro ao Cadastrar Usuario,Insira email e senha válidos";
+        });
     });
   }
 

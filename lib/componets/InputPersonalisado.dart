@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BotaoInputPersonalizado extends StatelessWidget{
+class InputPersonalizado extends StatelessWidget{
 
    final Color corPadrao;
    final String labelText;
@@ -11,7 +11,7 @@ class BotaoInputPersonalizado extends StatelessWidget{
    late final TextInputType textInputType;
 
 
-   BotaoInputPersonalizado(
+   InputPersonalizado(
         @required this.controller,
         this.corPadrao,
         this.labelText,

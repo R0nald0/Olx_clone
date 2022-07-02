@@ -11,6 +11,7 @@ void main(){
 
 
   runApp(MaterialApp(
+
      home: SplashScreen(),
     initialRoute: Rotas.ROTAS_SPLASHSCREEN,
     onGenerateRoute:Rotas.routeConfig
